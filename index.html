@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кто красивее?</title>
+    <title>Мы самые красивые ❤️</title>
     <style>
         * {
             margin: 0;
@@ -70,6 +70,7 @@
             z-index: 1;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
         }
         
         .names-container {
@@ -217,6 +218,78 @@
             opacity: 0;
         }
         
+        /* Окошко с сообщением */
+        .love-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 15px;
+            width: 300px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transform: translateY(-150%);
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(5px);
+            border: 2px solid #ff4b2b;
+        }
+        
+        .love-message.show {
+            transform: translateY(0);
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ff4b2b;
+            padding-bottom: 5px;
+        }
+        
+        .message-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #ff4b2b;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #ff4b2b;
+        }
+        
+        .message-content {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #333;
+            text-align: left;
+            padding: 10px 0;
+        }
+        
+        .love-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .love-btn:hover {
+            transform: scale(1.05);
+        }
+        
         @keyframes float {
             0%, 100% {
                 transform: translateY(0) rotate(0deg);
@@ -246,6 +319,21 @@
     <div class="circle decor"></div>
     <div class="circle decor"></div>
     <div class="circle decor"></div>
+    
+    <!-- Кнопка для показа сообщения -->
+    <button class="love-btn">Послание ❤️</button>
+    
+    <!-- Окошко с любовным посланием -->
+    <div class="love-message" id="loveMessage">
+        <div class="message-header">
+            <div class="message-title">Наше послание ❤️</div>
+            <button class="close-btn" id="closeBtn">×</button>
+        </div>
+        <div class="message-content">
+            <p>Я тебя очень сильно люблю, мы с тобой оба самые красивые, солнышко моё. Ты создавал мне html страничку, и я вставил сюда наше послание, чтобы оно всегда было с нами.</p>
+            <p>Мы вместе - это самое красивое, что есть на свете. Я люблю тебя больше всего на свете! ❤️</p>
+        </div>
+    </div>
     
     <div class="container">
         <div class="names-container">
@@ -290,10 +378,23 @@
             const rishatValue = document.getElementById('rishatValue');
             const tayaValue = document.getElementById('tayaValue');
             const result = document.getElementById('result');
+            const loveMessage = document.getElementById('loveMessage');
+            const loveBtn = document.querySelector('.love-btn');
+            const closeBtn = document.getElementById('closeBtn');
             
             let rishatProgress = 0;
             let tayaProgress = 0;
             let clicks = 0;
+            
+            // Показ любовного послания
+            loveBtn.addEventListener('click', function() {
+                loveMessage.classList.add('show');
+            });
+            
+            // Закрытие любовного послания
+            closeBtn.addEventListener('click', function() {
+                loveMessage.classList.remove('show');
+            });
             
             voteButton.addEventListener('click', function() {
                 // Увеличиваем количество кликов
@@ -349,6 +450,11 @@
                     }, 2000);
                 }
             }
+            
+            // Автоматически показываем сообщение через 3 секунды
+            setTimeout(() => {
+                loveMessage.classList.add('show');
+            }, 3000);
         });
     </script>
 </body>
